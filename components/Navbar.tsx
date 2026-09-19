@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 
@@ -12,11 +14,11 @@ if (typeof document !== "undefined" && !document.getElementById("google-fonts-na
 }
 
 const navLinks = [
-  { label: "Home", href: "#homesec1" },
-  { label: "About", href: "#homesec2" },
-  { label: "Services", href: "#homesec3" },
-  { label: "Projects", href: "#homesec4" },
-  { label: "Contact", href: "#homesec5" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const TapeStrip = ({ className = "" }) => (
@@ -28,12 +30,17 @@ const TapeStrip = ({ className = "" }) => (
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <motion.header
@@ -51,7 +58,7 @@ export default function Navbar() {
 
       <nav className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
         {/* ============ LOGO ============ */}
-        <a href="#homesec1" className="relative flex items-center gap-2.5 group select-none">
+        <Link href="/" onClick={() => setMenuOpen(false)} className="relative flex items-center gap-2.5 group select-none">
           {/* Marker highlight box behind logo */}
           <span className="absolute -inset-x-2 -inset-y-1 bg-amber-300 -rotate-1 transform -skew-x-2 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -70,25 +77,40 @@ export default function Navbar() {
 
           {/* Tape strip accent */}
           <TapeStrip className="absolute -top-2.5 -right-6 rotate-[20deg] opacity-70" />
-        </a>
+        </Link>
 
         {/* ============ DESKTOP LINKS ============ */}
         <ul className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link, idx) => (
-            <li key={link.label}>
-              <motion.a
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + idx * 0.08, duration: 0.5 }}
-                href={link.href}
-                className="relative block px-4 py-2 text-sm font-extrabold text-[#0b1329]/85 hover:text-[#0b1329] tracking-wide uppercase transition-colors group"
-              >
-                <span className="relative z-10">{link.label}</span>
-                {/* Marker underline on hover */}
-                <span className="absolute left-3 right-3 bottom-1 h-[7px] bg-amber-300 -skew-x-6 rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0" />
-              </motion.a>
-            </li>
-          ))}
+          {navLinks.map((link, idx) => {
+            const active = isActive(link.href);
+            return (
+              <li key={link.label}>
+                <motion.a
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 + idx * 0.08, duration: 0.5 }}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(link.href);
+                    setMenuOpen(false);
+                  }}
+                  className={`relative block px-4 py-2 text-sm font-extrabold tracking-wide uppercase transition-colors group ${
+                    active
+                      ? "text-[#0b1329]"
+                      : "text-[#0b1329]/85 hover:text-[#0b1329]"
+                  }`}
+                >
+                  <span className="relative z-10">{link.label}</span>
+                  <span
+                    className={`absolute left-3 right-3 bottom-1 h-[7px] bg-amber-300 -skew-x-6 rounded-[2px] transition-opacity duration-300 ${
+                      active ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                    }`}
+                  />
+                </motion.a>
+              </li>
+            );
+          })}
         </ul>
 
         {/* ============ DESKTOP CTA ============ */}
@@ -99,7 +121,11 @@ export default function Navbar() {
           className="hidden lg:block"
         >
           <a
-            href="#homesec5"
+            href="/contact"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/contact");
+            }}
             className="group relative inline-flex items-center gap-2 bg-[#0b1329] hover:bg-[#1d63fe] text-white font-black text-sm uppercase tracking-wider px-6 py-3 rounded-full border-2 border-[#0b1329] shadow-[4px_4px_0px_0px_rgba(251,191,36,1)] transition-all duration-300 hover:shadow-[2px_2px_0px_0px_rgba(251,191,36,1)] hover:-translate-y-0.5 active:translate-y-0.5 select-none"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
@@ -148,7 +174,11 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      router.push(link.href);
+                      setMenuOpen(false);
+                    }}
                     className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-extrabold text-[#0b1329] hover:bg-amber-300/30 uppercase tracking-wide transition-colors border-b border-dashed border-[#0b1329]/10 group"
                   >
                     {link.label}
@@ -164,8 +194,12 @@ export default function Navbar() {
                 className="pt-3"
               >
                 <a
-                  href="#homesec5"
-                  onClick={() => setMenuOpen(false)}
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/contact");
+                    setMenuOpen(false);
+                  }}
                   className="flex items-center justify-center gap-2 bg-[#0b1329] text-white font-black text-sm uppercase tracking-wider px-6 py-3.5 rounded-full border-2 border-[#0b1329] shadow-[4px_4px_0px_0px_rgba(251,191,36,1)] active:translate-y-0.5 transition-transform"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300" />

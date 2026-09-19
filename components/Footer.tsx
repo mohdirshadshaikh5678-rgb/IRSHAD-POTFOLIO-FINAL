@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, type Variants, type TargetAndTransition } from "framer-motion";
 import {
   Mail,
@@ -20,11 +22,11 @@ if (typeof document !== "undefined" && !document.getElementById("google-fonts-fo
 }
 
 const quickLinks = [
-  { label: "Home", href: "#homesec1" },
-  { label: "About Me", href: "#homesec2" },
-  { label: "Experience", href: "#homesec3" },
-  { label: "Services", href: "#homesec4" },
-  { label: "Contact", href: "#homesec5" },
+  { label: "Home", href: "/" },
+  { label: "About Me", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const services = [
@@ -83,8 +85,14 @@ const floatAnim = (duration = 6, yDistance = 8): { animate: TargetAndTransition 
 
 export default function Footer() {
   const [year] = useState(() => new Date().getFullYear());
+  const router = useRouter();
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const goTo = (href: string) => {
+    router.push(href);
+    window.scrollTo({ top: 0 });
+  };
 
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -161,7 +169,7 @@ export default function Footer() {
             viewport={{ once: true }}
             className="lg:col-span-4"
           >
-            <a href="#homesec1" className="relative inline-flex items-center gap-3 select-none group">
+            <Link href="/" onClick={() => goTo("/")} className="relative inline-flex items-center gap-3 select-none group">
               <span className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-white border-2 border-white shadow-[3px_3px_0px_0px_rgba(251,191,36,1)]">
                 <span className="font-mono text-[#0b1329] font-black text-base tracking-tight">&lt;/&gt;</span>
               </span>
@@ -174,7 +182,7 @@ export default function Footer() {
                 </span>
               </span>
               <TapeStrip className="absolute -top-3 -right-2 rotate-[24deg] opacity-60" />
-            </a>
+            </Link>
 
             <p className="mt-5 text-sm leading-relaxed text-slate-400 max-w-sm">
               Passionate web developer turning ideas into fast, responsive, and
@@ -225,6 +233,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
+                    onClick={(e) => { e.preventDefault(); goTo(l.href); }}
                     className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-amber-300 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-[#1d63fe]" />
@@ -300,7 +309,8 @@ export default function Footer() {
 
             {/* CTA button */}
             <a
-              href="#homesec5"
+              href="/contact"
+              onClick={(e) => { e.preventDefault(); goTo("/contact"); }}
               className="group inline-flex items-center gap-2 mt-6 bg-amber-300 hover:bg-amber-200 text-[#0b1329] font-black text-xs uppercase tracking-widest px-5 py-3 rounded-full border-2 border-amber-200 shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all"
             >
               Start a Project
