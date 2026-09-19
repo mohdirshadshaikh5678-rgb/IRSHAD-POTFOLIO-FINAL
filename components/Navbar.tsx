@@ -1,0 +1,182 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
+
+if (typeof document !== "undefined" && !document.getElementById("google-fonts-navbar")) {
+  const link = document.createElement("link");
+  link.id = "google-fonts-navbar";
+  link.rel = "stylesheet";
+  link.href = "https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Oswald:wght@700&family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap";
+  document.head.appendChild(link);
+}
+
+const navLinks = [
+  { label: "Home", href: "#homesec1" },
+  { label: "About", href: "#homesec2" },
+  { label: "Services", href: "#homesec3" },
+  { label: "Projects", href: "#homesec4" },
+  { label: "Contact", href: "#homesec5" },
+];
+
+const TapeStrip = ({ className = "" }) => (
+  <svg viewBox="0 0 100 30" className={`w-14 h-5 fill-amber-300/90 drop-shadow-xs pointer-events-none ${className}`} preserveAspectRatio="none">
+    <path d="M3,4 L97,2 L94,26 L6,28 Z" />
+  </svg>
+);
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 font-['Plus_Jakarta_Sans',sans-serif] ${
+        scrolled
+          ? "bg-[#f4f4f3] backdrop-blur-md shadow-[0_4px_0px_rgba(251,191,36,0.9)]"
+          : "bg-[#f4f4f3] border-b-2 border-dashed border-[#0b1329]/10"
+      }`}
+    >
+      {/* Thin top scribble line */}
+      <div className="h-1 w-full bg-[#0b1329]/90" />
+
+      <nav className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
+        {/* ============ LOGO ============ */}
+        <a href="#homesec1" className="relative flex items-center gap-2.5 group select-none">
+          {/* Marker highlight box behind logo */}
+          <span className="absolute -inset-x-2 -inset-y-1 bg-amber-300 -rotate-1 transform -skew-x-2 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+          <span className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#0b1329] border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+            <span className="font-mono text-[#fde047] font-black text-sm tracking-tight">&lt;/&gt;</span>
+          </span>
+
+          <span className="relative flex flex-col leading-none">
+            <span className="text-[#0b1329] text-lg font-black tracking-tight font-['Oswald',sans-serif] uppercase">
+              Irshad<span className="text-[#1d63fe]">.Shaikh</span>
+            </span>
+            <span className="font-['Caveat',cursive] text-[#1d63fe] text-sm font-bold rotate-[-3deg]">
+              web developer
+            </span>
+          </span>
+
+          {/* Tape strip accent */}
+          <TapeStrip className="absolute -top-2.5 -right-6 rotate-[20deg] opacity-70" />
+        </a>
+
+        {/* ============ DESKTOP LINKS ============ */}
+        <ul className="hidden lg:flex items-center gap-1">
+          {navLinks.map((link, idx) => (
+            <li key={link.label}>
+              <motion.a
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 + idx * 0.08, duration: 0.5 }}
+                href={link.href}
+                className="relative block px-4 py-2 text-sm font-extrabold text-[#0b1329]/85 hover:text-[#0b1329] tracking-wide uppercase transition-colors group"
+              >
+                <span className="relative z-10">{link.label}</span>
+                {/* Marker underline on hover */}
+                <span className="absolute left-3 right-3 bottom-1 h-[7px] bg-amber-300 -skew-x-6 rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0" />
+              </motion.a>
+            </li>
+          ))}
+        </ul>
+
+        {/* ============ DESKTOP CTA ============ */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="hidden lg:block"
+        >
+          <a
+            href="#homesec5"
+            className="group relative inline-flex items-center gap-2 bg-[#0b1329] hover:bg-[#1d63fe] text-white font-black text-sm uppercase tracking-wider px-6 py-3 rounded-full border-2 border-[#0b1329] shadow-[4px_4px_0px_0px_rgba(251,191,36,1)] transition-all duration-300 hover:shadow-[2px_2px_0px_0px_rgba(251,191,36,1)] hover:-translate-y-0.5 active:translate-y-0.5 select-none"
+          >
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            Hire Me
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </motion.div>
+
+        {/* ============ MOBILE HAMBURGER ============ */}
+        <button
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+          className="lg:hidden relative w-11 h-11 rounded-xl bg-[#0b1329] text-white border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] flex items-center justify-center active:translate-y-0.5 transition-transform"
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={menuOpen ? "close" : "open"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </motion.span>
+          </AnimatePresence>
+        </button>
+      </nav>
+
+      {/* ============ MOBILE MENU ============ */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden overflow-hidden bg-[#f4f4f3]/95 backdrop-blur-md border-b-2 border-dashed border-[#0b1329]/15"
+          >
+            <ul className="flex flex-col px-6 py-4 gap-1">
+              {navLinks.map((link, idx) => (
+                <motion.li
+                  key={link.label}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.06, duration: 0.3 }}
+                >
+                  <a
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-extrabold text-[#0b1329] hover:bg-amber-300/30 uppercase tracking-wide transition-colors border-b border-dashed border-[#0b1329]/10 group"
+                  >
+                    {link.label}
+                    <ArrowRight className="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  </a>
+                </motion.li>
+              ))}
+
+              <motion.li
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="pt-3"
+              >
+                <a
+                  href="#homesec5"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 bg-[#0b1329] text-white font-black text-sm uppercase tracking-wider px-6 py-3.5 rounded-full border-2 border-[#0b1329] shadow-[4px_4px_0px_0px_rgba(251,191,36,1)] active:translate-y-0.5 transition-transform"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  Hire Me
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </motion.li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
+}
