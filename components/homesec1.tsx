@@ -465,7 +465,7 @@ import React from 'react';
 import { motion, type Variants, type TargetAndTransition } from 'framer-motion';
 
 // Importing assets
-import irshadImg from '../public/assest/irsahd-image.png';
+import irshadImg from '../public/assest/01.png';
 
 // Inject custom fonts (Oswald, Permanent Marker, Caveat, Plus Jakarta Sans)
 if (typeof document !== 'undefined' && !document.getElementById('google-fonts-homesec1')) {

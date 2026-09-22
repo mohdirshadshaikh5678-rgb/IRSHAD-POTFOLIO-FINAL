@@ -334,7 +334,7 @@ import React from 'react';
 import { motion, type Variants, type TargetAndTransition } from 'framer-motion';
 
 // Import local character image
-import irshadImg from '../public/assest/irsahd 2.png';
+import irshadImg from '../public/assest/07.png';
 
 if (typeof document !== 'undefined' && !document.getElementById('google-fonts-homesec2')) {
   const link = document.createElement('link');

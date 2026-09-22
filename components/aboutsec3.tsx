@@ -32,15 +32,25 @@ const TapeStrip = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const skills = [
-  { name: "HTML / CSS / Tailwind", level: 95, color: "#f59e0b" },
-  { name: "JavaScript / TypeScript", level: 88, color: "#eab308" },
-  { name: "React / Next.js", level: 90, color: "#1d63fe" },
-  { name: "Node.js / Express", level: 84, color: "#10b981" },
-  { name: "MongoDB / MySQL", level: 80, color: "#16a34a" },
-  { name: "Graphic Design / Figma", level: 86, color: "#a855f7" },
-  { name: "Video Editing / Premiere", level: 82, color: "#c81e1e" },
-  { name: "AI Content Generation", level: 88, color: "#0ea5e9" },
+const skillGroups = [
+  {
+    name: "FRONTEND",
+    tag: "the pretty side",
+    color: "#1d63fe",
+    skills: ["HTML / CSS", "Tailwind CSS", "JavaScript", "TypeScript", "React", "Next.js"],
+  },
+  {
+    name: "BACKEND",
+    tag: "the engine room",
+    color: "#10b981",
+    skills: ["Node.js / Express", "REST APIs", "MongoDB", "MySQL", "Auth & Security"],
+  },
+  {
+    name: "DESIGN & TOOLS",
+    tag: "the creative kit",
+    color: "#a855f7",
+    skills: ["Figma", "Video Editing", "Git / GitHub", "AI Content", "Motion / 3D"],
+  },
 ];
 
 const techStack = [
@@ -79,31 +89,53 @@ export default function AboutSec3() {
             The tools I use every day to design, build and ship great products.
           </p>
 
-          {/* skill bars */}
-          <div className="mt-8 space-y-5">
-            {skills.map((s, idx) => (
+          {/* skill group cards */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+            {skillGroups.map((g, idx) => (
               <motion.div
-                key={s.name}
+                key={g.name}
                 custom={idx}
                 variants={fadeInUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
+                whileHover={{ y: -5, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                className="relative bg-white border-2 border-slate-900 rounded-2xl p-4 shadow-[5px_5px_0px_0px_rgba(15,23,42,1)]"
+                style={{ rotate: idx === 0 ? -1.5 : idx === 2 ? 1.5 : 0.5 }}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-black uppercase tracking-wide text-[#0d1b3e]">{s.name}</span>
-                  <span className="text-sm font-black text-[#1d63fe]">{s.level}%</span>
+                <TapeStrip className="absolute -top-3 left-1/2 -translate-x-1/2 rotate-[-3deg] w-12" />
+
+                {/* colored header */}
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: g.color }} />
+                  <h3 className="text-sm font-black italic tracking-wide font-['Oswald',sans-serif] uppercase text-[#0d1b3e]">
+                    {g.name}
+                  </h3>
                 </div>
-                <div className="h-3.5 w-full bg-white border-2 border-slate-900 rounded-full overflow-hidden shadow-inner">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${s.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    className="h-full rounded-full"
-                    style={{ backgroundColor: s.color }}
-                  />
-                </div>
+                <p className="font-['Caveat',cursive] text-lg font-bold leading-tight" style={{ color: g.color }}>
+                  {g.tag}
+                </p>
+                <div className="mt-1 h-1 w-14 rounded" style={{ backgroundColor: g.color }} />
+
+                <ul className="mt-3 space-y-2">
+                  {g.skills.map((s, sIdx) => (
+                    <motion.li
+                      key={s}
+                      custom={idx * 10 + sIdx}
+                      variants={fadeInUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      className="flex items-center gap-2"
+                    >
+                      <svg className="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="none" style={{ color: g.color }}>
+                        <path d="M4 10 L9 15 L16 5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span className="text-sm font-bold text-slate-700">{s}</span>
+                    </motion.li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
