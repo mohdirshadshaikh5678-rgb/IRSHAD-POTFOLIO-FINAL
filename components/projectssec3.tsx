@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
 import { motion, type Variants, type TargetAndTransition } from "framer-motion";
-import { ArrowUpRight, Folder, Film, Palette, Code2, Sparkles, Megaphone } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import teknodeImg from '../public/assest/teknodewebimg.png';
+import vibgyorImg from '../public/assest/vibgyorventure.jpeg';
+import innercompassImg from '../public/assest/innercompass.jpeg';
+import horizonImg from '../public/assest/hiparks.jpeg';
 
 if (typeof document !== "undefined" && !document.getElementById("google-fonts-projectssec3")) {
   const link = document.createElement("link");
@@ -35,52 +39,40 @@ const TapeStrip = ({ className = "" }: { className?: string }) => (
 
 const projects = [
   {
-    icon: Code2,
-    title: "Portfolio Website",
-    tag: "Web Dev",
-    desc: "A premium, animated portfolio with CMS-ready structure and 100/100 Lighthouse score.",
+    img: teknodeImg,
+    title: "Teknode E-Commerce",
+    tag: "E-Commerce",
+    desc: "A complete online store for Teknode with product catalog, cart, secure payments and a fast mobile-first storefront.",
     color: "#1d63fe",
     bg: "#e0ebff",
+    link: "https://deep.vibgyorventures.co.in/",
   },
   {
-    icon: Folder,
-    title: "Job Portal App",
-    tag: "Full-Stack",
-    desc: "MERN app with resume uploads, job filters, authentication and an admin dashboard.",
+    img: vibgyorImg,
+    title: "Vibgyor Ventures",
+    tag: "Corporate",
+    desc: "Premium corporate website for Vibgyor Ventures showcasing services, branding and a clean professional layout.",
     color: "#16a34a",
     bg: "#e0fbea",
+    link: "https://vibgyorventures.co.in/home",
   },
   {
-    icon: Film,
-    title: "Brand Promo Reel",
-    tag: "Video Editing",
-    desc: "30-second cinematic promo cut for a startup launch — colour graded & captioned.",
+    img: innercompassImg,
+    title: "Inner Compass App",
+    tag: "Web App",
+    desc: "A modern live web application with a clean, responsive and user-friendly frontend built for the web.",
     color: "#c81e1e",
     bg: "#ffe4e4",
+    link: "https://innercompasslive.vercel.app/",
   },
   {
-    icon: Palette,
-    title: "Coffee Brand Identity",
-    tag: "Design",
-    desc: "Logo, packaging and social templates for a local coffee roaster.",
+    img: horizonImg,
+    title: "Horizon Industrial Parks",
+    tag: "Corporate",
+    desc: "Corporate platform for India&apos;s largest industrial & logistics park developer with portfolio and insights.",
     color: "#f59e0b",
     bg: "#fff4dd",
-  },
-  {
-    icon: Sparkles,
-    title: "AI Content Campaign",
-    tag: "AI Content",
-    desc: "AI-generated product visuals, voiceover and video ad set for a fashion brand.",
-    color: "#a855f7",
-    bg: "#f3ebff",
-  },
-  {
-    icon: Megaphone,
-    title: "Restaurant Website",
-    tag: "Web Dev",
-    desc: "Menu showcase, reservations and Google Maps integration for a restaurant chain.",
-    color: "#0ea5e9",
-    bg: "#e0f6ff",
+    link: "https://www.hiparks.com/",
   },
 ];
 
@@ -107,7 +99,7 @@ export default function ProjectsSec3() {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {projects.map((p, idx) => (
             <motion.div
               key={p.title}
@@ -122,12 +114,16 @@ export default function ProjectsSec3() {
             >
               <TapeStrip className="absolute -top-3 -left-3 rotate-[-24deg]" />
 
-              {/* mock thumbnail */}
+              {/* image thumbnail */}
               <div
-                className="w-full h-36 rounded-xl border-2 border-slate-900 flex items-center justify-center relative overflow-hidden"
+                className="w-full h-40 rounded-xl border-2 border-slate-900 flex items-center justify-center relative overflow-hidden"
                 style={{ backgroundColor: p.bg, color: p.color }}
               >
-                <p.icon className="w-14 h-14" />
+                <img
+                  src={p.img.src}
+                  alt={`${p.title} screenshot`}
+                  className="w-full h-full object-contain"
+                />
                 <span className="absolute top-2 right-3 text-xs font-black uppercase tracking-widest bg-white border-2 border-slate-900 px-2 py-0.5 rounded-full">
                   {p.tag}
                 </span>
@@ -144,10 +140,15 @@ export default function ProjectsSec3() {
 
               <div className="mt-4 flex items-center justify-between">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.color }} />
-                <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#0b1329] group-hover:text-[#1d63fe] transition-colors">
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#0b1329] group-hover:text-[#1d63fe] transition-colors"
+                >
                   View Project
                   <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </span>
+                </a>
               </div>
 
               <span className="absolute -bottom-2 -right-2 w-6 h-10 rounded-xs -z-10" style={{ backgroundColor: p.color }} />

@@ -541,6 +541,8 @@ import { motion, type Variants, type TargetAndTransition } from 'framer-motion';
 
 // Import local character image
 import irshadImg from '../public/assest/05.png';
+import parashiftLogo from '../public/assest/parashift.jpg';
+import tekunikLogo from '../public/assest/tekunik.png';
 
 if (typeof document !== 'undefined' && !document.getElementById('google-fonts-homesec3')) {
   const link = document.createElement('link');
@@ -612,11 +614,27 @@ const BrowserDoodle = () => (
 );
 
 export default function HomeSec3() {
-  const experienceBullets = [
-    "Freelance Graphic Designer & Video Editor",
-    "2021 - 2024",
-    "Graphic Designer, Video Editor & AI Content Creation",
-   
+  const experience = [
+    {
+      logo: parashiftLogo,
+      name: "PARASHIFT",
+      role: "Web Developer",
+      desc: [
+        "Developed responsive, high-performance web interfaces for client projects.",
+        "Collaborated with designers to turn Figma mockups into pixel-perfect UI.",
+        "Built reusable components and shipped features end-to-end.",
+      ],
+    },
+    {
+      logo: tekunikLogo,
+      name: "TEKUNIK",
+      role: "Creative Designer & Developer",
+      desc: [
+        "Crafted visual content, branding and digital assets for marketing campaigns.",
+        "Produced video edits and AI-generated content for social media.",
+        "Supported full project lifecycle from concept to final delivery.",
+      ],
+    },
   ];
 
   const expertiseBullets = [
@@ -659,31 +677,62 @@ export default function HomeSec3() {
             <p className="mt-4 text-[#2d3a5c] text-base sm:text-[1.05rem] leading-relaxed font-medium max-w-2xl">
               Creating engaging website, promotional videos, and social media content for brands, businesses, educational institutions, and digital marketing campaigns.
             </p>
-            <p className="mt-3 text-[#2d3a5c] text-base sm:text-[1.05rem] font-medium max-w-2xl">
-              Delivered creative design and video projects across various niches
-            </p>
 
-            {/* Bullet Points */}
-            <ul className="mt-3 space-y-2 pl-1">
-              {experienceBullets.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-[#2d3a5c] text-sm sm:text-base font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#1d63fe] mt-2 shrink-0" />
-                  <span>{item}</span>
-                </li>
+            {/* Company Experience Cards */}
+            <div className="mt-6 space-y-5 max-w-2xl">
+              {experience.map((exp, idx) => (
+                <motion.div
+                  key={exp.name}
+                  custom={idx + 1}
+                  variants={fadeInUp}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ y: -4, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                  className={`relative flex items-start gap-4 bg-white border-2 border-slate-900 rounded-2xl p-4 shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] ${idx === 0 ? "rotate-[-0.5deg]" : "rotate-[0.5deg]"}`}
+                >
+                  {/* Logo slot */}
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl border-2 border-slate-900 overflow-hidden bg-[#f0f6fd] flex items-center justify-center p-1.5">
+                    <img
+                      src={typeof exp.logo === 'string' ? exp.logo : exp.logo.src}
+                      alt={`${exp.name} logo`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+
+                  {/* Company name + description */}
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <h3 className="text-lg sm:text-xl font-black italic tracking-wide text-[#0d1b3e] font-['Oswald',sans-serif] uppercase">
+                        {exp.name}
+                      </h3>
+                      <span className="font-['Caveat',cursive] text-[#1d63fe] text-lg font-bold rotate-[-2deg]">
+                        {exp.role}
+                      </span>
+                    </div>
+                    <ul className="mt-2.5 space-y-1.5">
+                      {exp.desc.map((line, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-[#2d3a5c] text-sm sm:text-[0.95rem] font-medium leading-snug">
+                          <span className="w-2 h-2 rounded-full bg-[#1d63fe] mt-1.5 shrink-0" />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
               ))}
-            </ul>
+            </div>
           </motion.div>
 
 
           {/* SECTION 2: CREATIVE EXPERTISE */}
-          <motion.div 
+          {/* <motion.div 
             custom={2}
             variants={fadeInUp}
             initial="hidden"
             animate="visible"
             className="relative"
           >
-            {/* Title with Blue Bullet Dot */}
             <div className="flex items-center gap-3 mb-1">
               <span className="w-3.5 h-3.5 rounded-full bg-[#1d63fe] shrink-0" />
               <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-black italic tracking-wide text-[#0d1b3e] font-['Oswald',sans-serif] uppercase">
@@ -692,7 +741,6 @@ export default function HomeSec3() {
             </div>
             <TitleUnderline />
 
-            {/* Bullet Points */}
             <ul className="mt-4 space-y-2.5 pl-1">
               {expertiseBullets.map((item, idx) => (
                 <li key={idx} className="flex items-center gap-3 text-[#2d3a5c] text-sm sm:text-base font-semibold">
@@ -701,7 +749,7 @@ export default function HomeSec3() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </motion.div> */}
 
 
           {/* BOTTOM-LEFT HANDWRITTEN DOODLE: "Design Edit Create" */}

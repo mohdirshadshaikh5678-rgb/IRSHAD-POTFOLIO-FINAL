@@ -509,19 +509,18 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, TargetAndTransition } from 'framer-motion';
-import { Check, ArrowRight, Grip } from 'lucide-react';
+import { Check, ArrowRight, Grip, ExternalLink } from 'lucide-react';
 import img01 from '../public/assest/teknodewebimg.png';
-import img02 from '../public/assest/02.png';
-import img03 from '../public/assest/teknodewebimg.png';
-import img04 from '../public/assest/04.png';
-import img05 from '../public/assest/05.png';
+import img02 from '../public/assest/vibgyorventure.jpeg';
+import img04 from '../public/assest/innercompass.jpeg';
+import img05 from '../public/assest/hiparks.jpeg';
 
 const cardGraphic = (img: { src: string }, alt: string) => (
-  <div className="relative my-2 rounded-2xl p-2 overflow-hidden border border-white/20 shadow-inner flex flex-col items-center z-10 w-full bg-white/10">
+  <div className="relative my-2 rounded-2xl p-1.5 overflow-hidden border border-white/20 shadow-inner flex flex-col items-center z-10 w-full bg-white/10">
     <img
       src={img.src}
       alt={alt}
-      className="w-full h-[120px] object-cover rounded-xl"
+      className="w-full h-[140px] object-contain rounded-xl"
     />
   </div>
 );
@@ -577,70 +576,61 @@ export default function HomeSec4() {
   const [currentIndex, setCurrentIndex] = useState(2); // Center card default
 
   const cardsData = [
-    // 1. Purple Card - E-Commerce
+    // 1. Purple Card - Teknode E-Commerce
     {
       id: 0,
       bgColor: "bg-[#2e1052]",
       textColor: "text-white",
       accentColor: "#2e1052",
       buttonBg: "bg-white hover:bg-slate-100 text-[#2e1052]",
-      title: <>E-COMMERCE<br />WEBSITE<br />DEVELOPMENT</>,
-      subtitle: "Build your online store with modern web solutions.",
-      cta: "START YOUR STORE",
-      graphic: cardGraphic(img01, "E-commerce store preview"),
-      checklist: ["Custom Store Design", "Payment Integration", "Product Management", "Fast & Secure"],
+      title: <>TEKNODE<br />E-COMMERCE<br />PLATFORM</>,
+      subtitle: "A complete online store for Teknode, built with modern web technologies.",
+      cta: "VISIT WEBSITE",
+      link: "https://deep.vibgyorventures.co.in/",
+      graphic: cardGraphic(img01, "Teknode e-commerce website"),
+      checklist: ["Product Catalog", "Payment Integration", "Order Management", "Fast & Secure"],
     },
-    // 2. Cyan/Blue Card - Web App Development
+    // 2. Cyan/Blue Card - Vibgyor Ventures
     {
       id: 1,
       bgColor: "bg-[#0284c7]",
       textColor: "text-white",
       accentColor: "#0284c7",
       buttonBg: "bg-white hover:bg-slate-100 text-[#0284c7]",
-      title: <>CUSTOM WEB<br />APP & SAAS<br />SOLUTIONS</>,
-      subtitle: "Tailor-made web applications engineered for speed.",
-      cta: "BUILD YOUR APP",
-      graphic: cardGraphic(img02, "Web app & SaaS preview"),
-      checklist: ["Scalable Architecture", "API Integrations", "Realtime Database", "High Performance"],
+      title: <>VIBGYOR<br />VENTURES<br />CORPORATE</>,
+      subtitle: "Official corporate website for Vibgyor Ventures with premium branding.",
+      cta: "VISIT WEBSITE",
+      link: "https://vibgyorventures.co.in/home",
+      graphic: cardGraphic(img02, "Vibgyor Ventures website"),
+      checklist: ["Company Branding", "Service Showcase", "SEO Friendly", "Mobile Responsive"],
     },
-    // 3. Center Red Card - Full Stack Web Development
+    // 3. Center Red Card - Inner Compass Web App
     {
       id: 2,
       bgColor: "bg-[#b21212]",
       textColor: "text-white",
       accentColor: "#b21212",
       buttonBg: "bg-white hover:bg-slate-100 text-[#b21212]",
-      title: <><span className="text-white">TEKNODE</span><br /><span className="text-[#0c1838]">WEBSITE</span><br /><span className="text-[#0c1838]"></span></>,
-      subtitle: "This is e-commerce website for Teknode, built with modern web technologies.",
-      cta: "LET'S BUILD SOMETHING GREAT",
-      graphic: cardGraphic(img03, "Full stack web project preview"),
-      checklist: ["Modern Tech Stack", "Responsive & Fast", "Secure & Scalable", "Ongoing Support"],
+      title: <><span className="text-white">INNER</span><br /><span className="text-[#0c1838]">COMPASS</span><br /><span className="text-[#0c1838]">WEB APP</span></>,
+      subtitle: "A modern live web application with a clean, fast and responsive frontend.",
+      cta: "VISIT WEBSITE",
+      link: "https://innercompasslive.vercel.app/",
+      graphic: cardGraphic(img04, "Inner Compass web app"),
+      checklist: ["Modern Frontend", "Responsive UI", "Fast Loading", "User Friendly"],
     },
-    // 4. Yellow Card - Portfolio Website
+    // 4. Yellow Card - Horizon Industrial Parks
     {
       id: 3,
       bgColor: "bg-[#f19d00]",
       textColor: "text-[#0c1838]",
       accentColor: "#f19d00",
       buttonBg: "bg-white hover:bg-slate-100 text-[#0c1838]",
-      title: <>PORTFOLIO<br />WEBSITE<br />DESIGN</>,
-      subtitle: "Showcase your work with a modern and professional website.",
-      cta: "CREATE YOUR PORTFOLIO",
-      graphic: cardGraphic(img04, "Portfolio website preview"),
-      checklist: ["Custom Design", "Fast Loading", "SEO Friendly", "Mobile Responsive"],
-    },
-    // 5. Emerald Card - Corporate & Business Website
-    {
-      id: 4,
-      bgColor: "bg-[#059669]",
-      textColor: "text-white",
-      accentColor: "#059669",
-      buttonBg: "bg-white hover:bg-slate-100 text-[#059669]",
-      title: <>CORPORATE &<br />BUSINESS<br />WEBSITES</>,
-      subtitle: "Establish trust & drive growth with premium business sites.",
-      cta: "GROW YOUR BRAND",
-      graphic: cardGraphic(img05, "Corporate website preview"),
-      checklist: ["Professional Branding", "Lead Capture Forms", "SEO & Analytics", "24/7 Security"],
+      title: <>HORIZON<br />INDUSTRIAL<br />PARKS</>,
+      subtitle: "Corporate platform for India&apos;s largest industrial & logistics park developer.",
+      cta: "VISIT WEBSITE",
+      link: "https://www.hiparks.com/",
+      graphic: cardGraphic(img05, "Horizon Industrial Parks website"),
+      checklist: ["Professional Branding", "Portfolio Showcase", "Lead Capture", "Trust Building"],
     },
   ];
 
@@ -672,6 +662,23 @@ export default function HomeSec4() {
 
       {/* Main Container */}
       <div className="relative z-10 max-w-[1400px] w-full mx-auto flex flex-col items-center justify-center">
+
+        {/* Section Title */}
+        <div className="relative z-30 text-center mb-8">
+          <div className="flex items-center gap-3 justify-center mb-1">
+            <span className="w-3.5 h-3.5 rounded-full bg-white shrink-0" />
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black italic tracking-wide text-white font-['Oswald',sans-serif] uppercase drop-shadow-md">
+              MY PROJECTS
+            </h2>
+            <span className="w-3.5 h-3.5 rounded-full bg-white shrink-0" />
+          </div>
+          <svg className="w-64 h-3 text-white mx-auto mt-1" viewBox="0 0 240 12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+            <path d="M4 6 C60 10, 160 10, 236 4" />
+          </svg>
+          <p className="mt-3 font-['Caveat',cursive] text-white text-2xl font-bold rotate-[-1deg]">
+            real projects I&apos;ve designed, coded & shipped
+          </p>
+        </div>
 
         {/* Cursive Corner Doodles */}
         <motion.div 
@@ -805,10 +812,17 @@ export default function HomeSec4() {
                 </ul>
 
                 {/* Action CTA Button */}
-                <button className={`mt-2 w-full ${card.buttonBg} font-black text-xs py-3 px-4 rounded-full shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider z-10`}>
+                <a
+                  href={card.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className={`mt-2 w-full ${card.buttonBg} font-black text-xs py-3 px-4 rounded-full shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-1.5 uppercase tracking-wider z-10 cursor-pointer`}
+                >
                   <ArrowRight className="w-3.5 h-3.5 stroke-[3.5]" />
                   <span>{card.cta}</span>
-                </button>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </motion.div>
             );
           })}
